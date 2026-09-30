@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Factorización QR</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header class="topbar">
+    <div>
+      <h1>Factorización QR</h1>
+      <p class="subtitle">API en Go para la factorización y API en Node.js para las estadísticas.</p>
+    </div>
+    <span id="session" class="session" data-state="anonymous">Sin sesión</span>
+  </header>
+
+  <main>
+    <section class="panel" aria-labelledby="auth-title">
+      <h2 id="auth-title">Acceso</h2>
+      <p class="hint">Las APIs están protegidas con JWT. Usa las credenciales de demostración para obtener un token.</p>
+
+      <form id="login-form" class="form-row">
+        <label>
+          Usuario
+          <input id="username" name="username" type="text" value="admin" autocomplete="username" required>
+        </label>
+        <label>
+          Contraseña
+          <input id="password" name="password" type="password" value="admin123" autocomplete="current-password" required>
+        </label>
+        <button type="submit" class="primary">Iniciar sesión</button>
+      </form>
+      <p id="login-message" class="message" role="status"></p>
+    </section>
+
+    <section class="panel" aria-labelledby="matrix-title">
+      <h2 id="matrix-title">Matriz de entrada</h2>
+      <div class="form-row">
+        <label>
+          Filas
+          <input id="rows" type="number" min="1" max="8" value="3">
+        </label>
+        <label>
+          Columnas
+          <input id="cols" type="number" min="1" max="8" value="3">
+        </label>
+        <button id="fill-example" type="button">Ejemplo</button>
+        <button id="compute" type="button" class="primary" disabled>Calcular QR</button>
+      </div>
+
+      <div id="matrix-input" class="matrix-input" aria-label="Valores de la matriz"></div>
+      <p id="matrix-message" class="message" role="status"></p>
+    </section>
+
+    <section id="results" class="results" hidden>
+      <div class="panel">
+        <h2>Q</h2>
+        <div id="matrix-q" class="matrix-output"></div>
+      </div>
+      <div class="panel">
+        <h2>R</h2>
+        <div id="matrix-r" class="matrix-output"></div>
+      </div>
+      <div class="panel">
+        <h2>Estadísticas</h2>
+        <dl id="statistics" class="statistics"></dl>
+      </div>
+    </section>
+  </main>
+
+  <script src="app.js"></script>
+</body>
+</html>

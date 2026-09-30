@@ -1,0 +1,50 @@
+# Variante para desplegar en una VM: solo se publica el frontend y las APIs
+# quedan en la red interna de Docker.
+#
+#   cp .env.example .env
+#   docker compose -f docker-compose.prod.yml up -d --build
+name: reto-tecnico
+
+services:
+  node-api:
+    build:
+      context: ./node-api
+    image: reto-tecnico/node-api:latest
+    environment:
+      PORT: "3000"
+      JWT_SECRET: ${JWT_SECRET:?define JWT_SECRET en tu archivo .env}
+      JWT_ISSUER: ${JWT_ISSUER:-reto-tecnico}
+      JWT_EXPIRES_IN: ${JWT_EXPIRES_IN:-1h}
+      AUTH_USERS: ${AUTH_USERS:-admin:admin123,analista:analista123}
+    expose:
+      - "3000"
+    restart: always
+
+  go-api:
+    build:
+      context: ./go-api
+    image: reto-tecnico/go-api:latest
+    environment:
+      HTTP_ADDR: ":8080"
+      NODE_API_URL: http://node-api:3000
+      JWT_SECRET: ${JWT_SECRET:?define JWT_SECRET en tu archivo .env}
+      JWT_ISSUER: ${JWT_ISSUER:-reto-tecnico}
+      MAX_MATRIX_DIM: ${MAX_MATRIX_DIM:-200}
+      REQUEST_TIMEOUT: ${REQUEST_TIMEOUT:-5s}
+    expose:
+      - "8080"
+    depends_on:
+      node-api:
+        condition: service_healthy
+    restart: always
+
+  frontend:
+    build:
+      context: ./frontend
+    image: reto-tecnico/frontend:latest
+    ports:
+      - "80:80"
+    depends_on:
+      - go-api
+      - node-api
+    restart: always

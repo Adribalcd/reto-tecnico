@@ -1,0 +1,16 @@
+.env
+*.log
+node_modules/
+coverage/
+dist/
+
+# Go
+go-api/bin/
+*.test
+*.out
+
+# Editores y sistema operativo
+.idea/
+.vscode/
+.DS_Store
+Thumbs.db
