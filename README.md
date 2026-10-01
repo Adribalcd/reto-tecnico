@@ -178,3 +178,9 @@ si le pones un dominio propio, conviene meter HTTPS por delante. Para un PaaS qu
 separa los servicios, hay que apuntar el frontend a las URLs de cada API y
 agregar CORS en la de Go.
 
+## Demo en Azure
+
+[Abrir la aplicación](https://reto-tecnico.gentlemoss-a8725290.eastus.azurecontainerapps.io)
+
+Desplegada en Azure Container Apps con HTTPS y autenticación JWT.
+Las credenciales se entregan por separado. [Detalles del despliegue](infra/azure/README.md).
